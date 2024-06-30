@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web_course/src/pages/home/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_course/src/providers/router_provider.dart';
+import 'package:flutter_web_course/src/providers/theme_provider.dart';
 
-class AppWidget extends StatelessWidget {
+class AppWidget extends ConsumerWidget {
   const AppWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.dark,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(ThemeProvider.provider);
+    
+    return MaterialApp.router(
+      routerConfig: routerProvider,
+      title: 'Responsive Flutter Web',
+      themeMode: themeMode,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      title: 'Flutter Web Course',
-      initialRoute: '/home_page',
-      routes: {
-        '/home_page': (context) => const HomePage(),
-      },
       debugShowCheckedModeBanner: false,
     );
   }
